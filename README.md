@@ -18,3 +18,10 @@ View your app in AI Studio: https://ai.studio/apps/ec693a64-59c4-4065-a45d-08762
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Deploy on GitHub Pages
+
+This project is configured for GitHub Pages at:
+`https://kartikkhandelwal-pm.github.io/TaxMind.Ai/`
+
+In the repository settings on GitHub, set **Pages > Build and deployment > Source** to **GitHub Actions**. After you push to `main`, the workflow in `.github/workflows/deploy.yml` will build the Vite app and publish the `dist` folder.
