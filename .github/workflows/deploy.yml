@@ -17,9 +17,14 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -33,10 +38,16 @@ jobs:
       - name: Type check
         run: npm run lint
 
+      - name: Verify Gemini secret
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::Missing repository secret named GEMINI_API_KEY. Add it under Settings > Secrets and variables > Actions > Repository secrets."
+            exit 1
+          fi
+          echo "GEMINI_API_KEY is configured for this build."
+
       - name: Build
         run: npm run build
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
