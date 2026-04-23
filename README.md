@@ -25,3 +25,10 @@ This project is configured for GitHub Pages at:
 `https://kartikkhandelwal-pm.github.io/TaxMind.Ai/`
 
 In the repository settings on GitHub, set **Pages > Build and deployment > Source** to **GitHub Actions**. After you push to `main`, the workflow in `.github/workflows/deploy.yml` will build the Vite app and publish the `dist` folder.
+
+If GitHub Actions is not enabled for the repository, use the fallback static build instead:
+
+1. Run `npm run build:pages`
+2. Commit the generated `docs` folder
+3. Set **Pages > Build and deployment > Source** to **Deploy from a branch**
+4. Select branch `main` and folder `/docs`
