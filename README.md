@@ -26,6 +26,8 @@ This project is configured for GitHub Pages at:
 
 In the repository settings on GitHub, set **Pages > Build and deployment > Source** to **GitHub Actions**. After you push to `main`, the workflow in `.github/workflows/deploy.yml` will build the Vite app and publish the `dist` folder.
 
+Add the Gemini key at **Settings > Secrets and variables > Actions > Repository secrets** with the exact name `GEMINI_API_KEY`. The deploy workflow injects that secret during `npm run build`.
+
 If GitHub Actions is not enabled for the repository, use the fallback static build instead:
 
 1. Run `npm run build:pages`
