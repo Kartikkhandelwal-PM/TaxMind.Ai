@@ -439,10 +439,10 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
   return (
     <div className="flex flex-col h-full w-full relative">
 
-      <div className={cn("flex-1 w-full relative overflow-y-auto subtle-scroll", messages.length > 0 ? "pt-4 px-2" : "flex items-center justify-center")}>
+      <div className={cn("flex-1 w-full relative overflow-y-auto subtle-scroll", messages.length > 0 ? "pt-4 px-2 sm:px-3" : "flex items-center justify-center")}>
         <div className="w-full max-w-[850px] mx-auto relative h-full">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center w-full z-10 relative px-6 overflow-hidden pb-40 h-full">
+          <div className="flex flex-col items-center justify-center w-full z-10 relative px-4 sm:px-6 overflow-hidden pb-32 sm:pb-40 pt-16 sm:pt-0 h-full">
              
              {/* Background Decoration */}
              <div className="absolute inset-0 pointer-events-none">
@@ -466,9 +466,9 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                 />
              </div>
 
-             <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="relative mb-12 flex justify-center items-center w-full max-w-sm h-32">
+             <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="relative mb-8 sm:mb-12 flex justify-center items-center w-full max-w-sm h-28 sm:h-32">
                {/* Center AI Orb */}
-               <div className="absolute z-10 w-24 h-24 rounded-[36px] bg-white shadow-2xl flex items-center justify-center border border-white ring-[12px] ring-[#f1f5f9]/30">
+               <div className="absolute z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-[28px] sm:rounded-[36px] bg-white shadow-2xl flex items-center justify-center border border-white ring-[10px] sm:ring-[12px] ring-[#f1f5f9]/30">
                  <div className="relative w-12 h-12">
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#3A759B] to-[#F87C71] rounded-full animate-ping opacity-20" />
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#3A759B] to-[#F87C71] rounded-full blur-[6px] opacity-60" />
@@ -508,7 +508,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
 
              <motion.p
                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-               className="text-[#53637a] text-[20px] font-medium text-center max-w-xl mx-auto leading-relaxed mb-6 px-4"
+               className="text-[#53637a] text-[16px] sm:text-[20px] font-medium text-center max-w-xl mx-auto leading-relaxed mb-6 px-4"
              >
                What do you need to look up or resolve today?
              </motion.p>
@@ -569,7 +569,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                             {idx === messages.length - 2 && msg.role === 'user' && msg.type !== 'voice' && ( // Only allow editing last user prompt
                               <button 
                                 onClick={() => startEditing(msg)}
-                                className="absolute -left-10 top-1/2 -translate-y-1/2 p-2 opacity-0 group-hover:opacity-100 transition-all text-[#8999af] hover:text-[#1a273b]"
+                                className="absolute -left-2 sm:-left-10 -top-9 sm:top-1/2 sm:-translate-y-1/2 p-2 rounded-xl bg-white/90 sm:bg-transparent opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all text-[#8999af] hover:text-[#1a273b] shadow-sm sm:shadow-none"
                               >
                                 <Edit3 className="w-4 h-4" />
                               </button>
@@ -587,7 +587,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                       </div>
                       
                       {msg.role === 'assistant' && msg.content !== '' && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 flex items-center space-x-2 pl-1 text-[#8999af]">
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 flex flex-wrap items-center gap-2 pl-1 text-[#8999af]">
                           <button 
                             onClick={() => copyToClipboard(msg.content, msg.id)}
                             className="p-2 rounded-xl hover:bg-white transition-all shadow-sm active:scale-90"
@@ -600,7 +600,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                           >
                             <RefreshCw className="w-4 h-4" />
                           </button>
-                          <div className="w-px h-5 bg-[#e2e8f0] mx-2" />
+                          <div className="hidden sm:block w-px h-5 bg-[#e2e8f0] mx-2" />
                           <button 
                             onClick={() => handleFeedback(msg.id, 'up')}
                             className={cn("p-2 rounded-xl transition-all shadow-sm", feedbackState[msg.id] === 'up' ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "hover:bg-white border border-transparent")}
@@ -618,7 +618,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                             {feedbackToast?.id === msg.id && (
                               <motion.div 
                                 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }}
-                                className="ml-3 px-3 py-1.5 rounded-lg bg-[#f1f5f9] flex items-center space-x-2"
+                                className="w-full sm:w-auto px-3 py-1.5 rounded-lg bg-[#f1f5f9] flex items-center space-x-2"
                               >
                                 {feedbackToast.type === 'up' ? <ThumbsUp className="w-3 h-3 text-emerald-600" /> : <ThumbsDown className="w-3 h-3 text-orange-600" />}
                                 <span className="text-[11px] font-bold text-[#53637a]">Feedback saved</span>
@@ -642,8 +642,8 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
       {/* Repositioned Status Indicator - Small and Contextual just above input */}
       <div 
         className={cn(
-          "fixed bottom-[110px] right-0 flex justify-center pointer-events-none z-40 transition-all duration-300",
-          isSidebarOpen ? "left-[280px]" : "left-0"
+          "fixed bottom-[102px] sm:bottom-[110px] right-0 flex justify-center pointer-events-none z-40 transition-all duration-300 px-4",
+          isSidebarOpen ? "left-0 md:left-[280px]" : "left-0"
         )}
       >
         <AnimatePresence>
@@ -667,8 +667,8 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
       {/* Fixed Layout for Input - No pointer events unless on child */}
       <div 
         className={cn(
-          "fixed bottom-0 right-0 flex flex-col justify-end pointer-events-none z-40 transition-all duration-300 bg-gradient-to-t from-[#fcfdff] via-[#fcfdff]/90 to-transparent pt-12 pb-5 px-4 md:px-8",
-          isSidebarOpen ? "left-[280px]" : "left-0"
+          "fixed bottom-0 right-0 flex flex-col justify-end pointer-events-none z-40 transition-all duration-300 bg-gradient-to-t from-[#fcfdff] via-[#fcfdff]/90 to-transparent pt-10 sm:pt-12 pb-4 sm:pb-5 px-3 sm:px-4 md:px-8",
+          isSidebarOpen ? "left-0 md:left-[280px]" : "left-0"
         )}
       >
         <div className="w-full max-w-[800px] pointer-events-auto mx-auto flex flex-col">
@@ -690,7 +690,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
             {showSlashMenu && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-                className="mb-4 w-[350px] bg-white border border-[#e2e8f0] rounded-3xl shadow-2xl overflow-hidden flex flex-col p-2 self-start md:ml-12"
+                className="mb-4 w-full max-w-[350px] bg-white border border-[#e2e8f0] rounded-3xl shadow-2xl overflow-hidden flex flex-col p-2 self-start md:ml-12"
               >
                 <div className="px-4 py-2 border-b border-[#f1f5f9] mb-2">
                    <span className="text-[11px] font-bold text-[#8999af] uppercase tracking-widest">Select Client Context</span>
@@ -714,17 +714,17 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
             {showAttachMenu && (
               <motion.div
                  initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                 className="mb-4 w-auto self-start bg-white border border-[#e2e8f0] rounded-[24px] shadow-2xl p-2 flex space-x-2 md:ml-2"
+                 className="mb-4 w-full sm:w-auto self-start bg-white border border-[#e2e8f0] rounded-[24px] shadow-2xl p-2 flex flex-wrap sm:flex-nowrap gap-2 md:ml-2"
               >
-                 <button className="flex flex-col items-center justify-center w-20 h-20 rounded-[16px] hover:bg-[#f8fafc] transition-all group">
+                 <button className="flex-1 sm:flex-none flex flex-col items-center justify-center min-w-[84px] h-20 rounded-[16px] hover:bg-[#f8fafc] transition-all group">
                    <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><FileText className="w-5 h-5" /></div>
                    <span className="text-[11px] font-bold text-[#53637a]">Document</span>
                  </button>
-                 <button className="flex flex-col items-center justify-center w-20 h-20 rounded-[16px] hover:bg-[#f8fafc] transition-all group">
+                 <button className="flex-1 sm:flex-none flex flex-col items-center justify-center min-w-[84px] h-20 rounded-[16px] hover:bg-[#f8fafc] transition-all group">
                    <div className="w-10 h-10 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><ImageIcon className="w-5 h-5" /></div>
                    <span className="text-[11px] font-bold text-[#53637a]">Image</span>
                  </button>
-                 <button className="flex flex-col items-center justify-center w-20 h-20 rounded-[16px] hover:bg-[#f8fafc] transition-all group">
+                 <button className="flex-1 sm:flex-none flex flex-col items-center justify-center min-w-[84px] h-20 rounded-[16px] hover:bg-[#f8fafc] transition-all group">
                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><Briefcase className="w-5 h-5" /></div>
                    <span className="text-[11px] font-bold text-[#53637a]">Client</span>
                  </button>
@@ -742,16 +742,16 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="absolute inset-0 z-10 bg-white/95 backdrop-blur-md rounded-[32px] flex items-center justify-between px-6 border border-orange-100 shadow-[0_0_40px_rgba(248,124,113,0.15)]"
+                  className="absolute inset-0 z-10 bg-white/95 backdrop-blur-md rounded-[32px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-4 sm:px-6 py-4 sm:py-0 border border-orange-100 shadow-[0_0_40px_rgba(248,124,113,0.15)]"
                 >
-                   <div className="flex items-center space-x-4">
+                   <div className="flex items-center space-x-3 sm:space-x-4 min-w-0">
                      <div className="relative flex items-center justify-center w-8 h-8">
                         <div className="absolute inset-0 bg-[#F87C71] rounded-full animate-ping opacity-20" />
                         <Mic className="w-5 h-5 text-[#F87C71] relative z-10 animate-pulse" />
                      </div>
                      <span className="font-bold text-[#1a273b] text-[15px]">Listening to context...</span>
                    </div>
-                   <div className="flex items-center space-x-2">
+                   <div className="flex items-center space-x-2 self-end sm:self-auto">
                      <div className="flex space-x-1 items-center h-8">
                        {[...Array(5)].map((_, idx) => (
                          <motion.div key={idx} animate={{ height: [8, 24, 8] }} transition={{ duration: 1, repeat: Infinity, delay: idx * 0.15 }} className="w-1.5 bg-orange-400 rounded-full" />
@@ -776,16 +776,16 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
             <AnimatePresence>
               {activeClient && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="px-3 pb-2 pt-1 flex">
-                  <div className="flex items-center bg-[#f0f7fb] border border-[#e2e8f0] rounded-full px-3 py-1">
+                  <div className="flex items-center max-w-full bg-[#f0f7fb] border border-[#e2e8f0] rounded-full px-3 py-1">
                     <Briefcase className="w-3.5 h-3.5 text-[#3A759B] mr-2" />
-                    <span className="text-[12px] font-bold text-[#3A759B]">{activeClient.name}</span>
+                    <span className="text-[12px] font-bold text-[#3A759B] truncate">{activeClient.name}</span>
                     <button onClick={() => onSelectClient(null)} className="ml-2 text-[#3A759B] hover:bg-[#e0ebf3] rounded-full p-0.5"><X className="w-3 h-3" /></button>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <div className="flex items-center min-h-[44px]">
+            <div className="flex items-end min-h-[44px]">
               <div className="flex-shrink-0 px-1">
                 <button 
                   onClick={() => setShowAttachMenu(!showAttachMenu)}
@@ -798,7 +798,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
               <textarea
                 ref={inputRef} value={input} onChange={handleInputChange} onKeyDown={handleKeyDown}
                 placeholder="Query GST portal, reconcile data, or ask tax assistant..."
-                className="flex-1 bg-transparent border-0 focus:ring-0 resize-none scrollbar-hide py-2.5 px-3 text-[15px] outline-none text-[#1a273b] placeholder:text-[#8999af] font-medium leading-relaxed"
+                className="flex-1 min-w-0 bg-transparent border-0 focus:ring-0 resize-none scrollbar-hide py-2.5 px-2 sm:px-3 text-[14px] sm:text-[15px] outline-none text-[#1a273b] placeholder:text-[#8999af] font-medium leading-relaxed"
                 style={{ height: '48px' }}
               />
 
@@ -825,7 +825,7 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
                 initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}
                 className="mt-3 flex flex-col items-center w-full pointer-events-none"
               >
-                <div className="flex items-center justify-center space-x-2 text-[10px] sm:text-[11px] font-bold text-[#8999af] tracking-widest uppercase bg-white/40 backdrop-blur-md py-1.5 px-4 rounded-full border border-[#f1f5f9]">
+                <div className="flex items-center justify-center space-x-2 text-[10px] sm:text-[11px] font-bold text-[#8999af] tracking-widest uppercase bg-white/40 backdrop-blur-md py-1.5 px-3 sm:px-4 rounded-full border border-[#f1f5f9] max-w-full">
                    <Shield className="w-3 h-3 text-[#3A759B]" />
                    <span className="text-center">TaxMind AI can make mistakes. Verify critical data at your end.</span>
                 </div>
@@ -838,24 +838,24 @@ export function Chat({ clients, activeClient, onSelectClient, clientData, isSide
       {/* Document Preview Modal */}
       <AnimatePresence>
         {previewDoc && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-8">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-8">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setPreviewDoc(null)} className="absolute inset-0 bg-[#1a273b]/60 backdrop-blur-md cursor-zoom-out" />
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white w-full max-w-4xl h-[85vh] rounded-[40px] shadow-2xl relative z-10 overflow-hidden flex flex-col border border-white/20">
-               <div className="p-6 border-b border-[#f1f5f9] flex items-center justify-between bg-[#f8fafc]">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center shadow-inner"><FileText className="w-6 h-6" /></div>
-                    <div><h3 className="font-bold text-[#1a273b]">{previewDoc.name}</h3><p className="text-xs text-[#53637a]">{previewDoc.size}</p></div>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white w-full max-w-4xl h-[85vh] rounded-[28px] sm:rounded-[40px] shadow-2xl relative z-10 overflow-hidden flex flex-col border border-white/20">
+               <div className="p-4 sm:p-6 border-b border-[#f1f5f9] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#f8fafc]">
+                  <div className="flex items-center space-x-3 sm:space-x-4 min-w-0">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center shadow-inner shrink-0"><FileText className="w-5 h-5 sm:w-6 sm:h-6" /></div>
+                    <div className="min-w-0"><h3 className="font-bold text-[#1a273b] truncate">{previewDoc.name}</h3><p className="text-xs text-[#53637a]">{previewDoc.size}</p></div>
                   </div>
-                  <div className="flex space-x-3">
-                    <button className="p-3 bg-[#1a273b] text-white rounded-2xl shadow-lg hover:bg-black transition-all flex items-center space-x-2"><Download className="w-5 h-5" /><span className="text-sm font-bold">Download PDF</span></button>
+                  <div className="flex w-full sm:w-auto justify-between sm:justify-start space-x-3">
+                    <button className="px-4 py-3 bg-[#1a273b] text-white rounded-2xl shadow-lg hover:bg-black transition-all flex items-center space-x-2"><Download className="w-5 h-5" /><span className="text-sm font-bold">Download PDF</span></button>
                     <button onClick={() => setPreviewDoc(null)} className="p-3 hover:bg-[#f1f5f9] rounded-2xl text-[#53637a] transition-colors"><X className="w-6 h-6" /></button>
                   </div>
                </div>
-               <div className="flex-1 bg-neutral-100 p-8 flex flex-col items-center justify-center space-y-6">
+               <div className="flex-1 bg-neutral-100 p-4 sm:p-8 flex flex-col items-center justify-center space-y-6">
                   <div className="w-full max-w-2xl aspect-[3/4] bg-white rounded-xl shadow-2xl flex items-center justify-center relative">
                      <div className="flex flex-col items-center text-center max-w-xs">
                         <FileText className="w-16 h-16 text-neutral-300 mb-4" />
-                        <p className="font-bold text-neutral-400">PDF Reader Previewing Document Content...</p>
+                        <p className="font-bold text-neutral-400 px-4">PDF Reader Previewing Document Content...</p>
                         <div className="mt-8 space-y-2 w-full">
                            <div className="h-4 bg-neutral-50 rounded-full w-full" />
                            <div className="h-4 bg-neutral-50 rounded-full w-5/6" />
