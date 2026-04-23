@@ -4,7 +4,7 @@ import { Chat } from './components/Chat';
 import { mockClients, clientMockData, initialExtensiveChat, mockHistoryChats } from './services/mockData';
 import { Menu, Hexagon, X, Users, Bell, Zap, Shield, Trash2 as TrashIcon, CreditCard, ChevronRight, FileText, Database, Calculator, HelpCircle, Search, Check, Sparkles, Landmark, ZapOff } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Client } from './types';
+import { Client, Message } from './types';
 
 // Light Animated Splash Screen
 const SplashScreen = () => (
